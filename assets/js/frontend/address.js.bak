@@ -1,0 +1,26 @@
+jQuery(document).ready(function($){
+    $('head').append('<style type="text/css">#billing_company_number_field,#billing_vat_number_field,#billing_vat_number_2_field{display:none;}#billing_company_placeholder_field label{font-size:20px;line-height:10px;display:block;}.dn{display:none!important;}input #billing_company_placeholder{position:relative!important;}</style>');
+
+    $("#billing_company_placeholder").click(function(){
+        $("#billing_company_number_field,#billing_vat_number_field,#billing_vat_number_2_field").slideToggle("slow");
+    });
+
+
+    $( 'body' )
+
+		.bind( 'country_to_state_changing', function( event, country, wrapper ) {
+
+		var $vat_number_2_box = $( this ).find( '#billing_vat_number_2_field' ).closest( 'p' ),
+		$billing_fields = wrapper.parent().find( '.woocommerce-billing-fields, .woocommerce' );
+		if( $billing_fields.length > 0)
+		{
+			if( country === 'SK' ) {
+				$vat_number_2_box.removeClass("dn");
+			}
+			else {
+				$vat_number_2_box.addClass("dn");
+			}
+		}
+	});
+
+});
