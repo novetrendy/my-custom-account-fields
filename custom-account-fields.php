@@ -68,7 +68,7 @@ final class CSCustomAccountFields {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
 
-        //add_filter('woocommerce_checkout_fields',array( $this, 'reorder_fields'));
+        add_filter('woocommerce_checkout_fields',array($this, 'order_fields'));
 
 		// admin (backend) part
 		add_filter( 'woocommerce_customer_meta_fields', array( $this, 'woocommerce_customer_meta_fields' ) );
@@ -218,26 +218,35 @@ final class CSCustomAccountFields {
 			) );
 	}
 
-    /* public function reorder_fields($fields) {
-    //move these around in the order you'd like
-    $fields2['billing']['billing_first_name'] = $fields['billing']['billing_first_name'];
-    $fields2['billing']['billing_last_name'] = $fields['billing']['billing_last_name'];
-    $fields2['billing']['billing_email'] = $fields['billing']['billing_email'];
-    $fields2['billing']['billing_address_1'] = $fields['billing']['billing_address_1'];
-    $fields2['billing']['billing_postcode'] = $fields['billing']['billing_postcode'];
-    $fields2['billing']['billing_city'] = $fields['billing']['billing_city'];
-    $fields2['billing']['billing_country'] = $fields['billing']['billing_country'];
-    $fields2['billing']['billing_state'] = $fields['billing']['billing_state'];
-    $fields2['billing']['billing_phone'] = $fields['billing']['billing_phone'];
-    $fields2['billing']['billing_company'] = $fields['billing']['billing_company'];
-    $fields2['billing']['billing_company_number'] = $fields['billing']['billing_company_number'];
-    $fields2['billing']['billing_vat_number'] = $fields['billing']['billing_company_number'];
-    $fields2['billing']['billing_vat_number_2'] = $fields['billing']['billing_company_number'];
 
+    function order_fields($fields) {
 
+    $order = array(
+        "billing_first_name",
+        "billing_last_name",
+        "billing_address_1",
+        "billing_address_2",
+        "billing_city",
+        "billing_postcode",
+        "billing_country",
+        "billing_email",
+        "billing_phone",
+        "billing_company_placeholder",
+        "billing_company",
+        "billing_company_number",
+        "billing_vat_number",
+        "billing_vat_number_2"
 
-    return $fields2;
-}   */
+    );
+    foreach($order as $field)
+    {
+        $ordered_fields[$field] = $fields["billing"][$field];
+    }
+
+    $fields["billing"] = $ordered_fields;
+    return $fields;
+
+}
 
 }
 endif;
